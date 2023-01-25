@@ -1,0 +1,6 @@
+- hosts: all
+  become: yes
+  vars:
+    github_repo: https://github.com/nok911/QA-petclinic-team2
+  tasks:
+  - name:

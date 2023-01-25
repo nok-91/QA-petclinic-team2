@@ -1,0 +1,16 @@
+version: '3.7'
+services:
+  front-end:
+    container_name: spring-petclinic-angular
+    build: ./spring-petclinic-angular
+    image: nokdev/spring-petclinic-angular:latest
+    depends_on:
+    - backend
+    networks: 
+     - my_network
+    ports:
+    - target: 8080
+      published: 8080
+      protocol: tcp
+  back-end:
+    

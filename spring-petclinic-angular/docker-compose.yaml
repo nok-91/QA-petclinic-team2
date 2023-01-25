@@ -1,16 +1,33 @@
 version: '3.7'
 services:
-  front-end:
+  nginx:
+    container_name: spring-petclinic-nginx
+    image: nokdev/spring-petclinic-nginx:latest
+    networks: 
+    - pc_network
+    ports:
+    - target: 80
+      published: 80 
+      protocol: tcp
+    volumes:
+    - type: bind
+      source: ./nginx/nginx.conf
+      target: /etc/nginx/nginx.conf
+  frontend:
     container_name: spring-petclinic-angular
     build: ./spring-petclinic-angular
     image: nokdev/spring-petclinic-angular:latest
     depends_on:
     - backend
     networks: 
-     - my_network
+     - pc_network
     ports:
     - target: 8080
       published: 8080
       protocol: tcp
-  back-end:
+  backend:
+    container_name: spring-petclinic-rest
+    image: nokdev/spring-petclinic-rest:latest
+
+
     

@@ -1,0 +1,21 @@
+version: "3.7"
+services: 
+  nginx:
+    image: nokdev/spring-petclinic-nginx
+    build:
+      context: ./spring-petclinic-nginx/.
+      dockerfile: Dockerfile
+  mysql:
+    image: nokdev/spring-petclinic-db:latest
+    build: ./spring-petclinic-db/.
+  back-end:
+    image: nokdev/spring-petclinic-rest:latest
+    build:
+      context: ./spring-petclinic-rest/.
+      dockerfile: Dockerfile     
+  front-end:
+    image: nokdev/spring-petclinic-angular:latest
+    build: 
+      context: ./spring-petclinic-angular/.
+      dockerfile: Dockerfile
+  

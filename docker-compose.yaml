@@ -15,7 +15,7 @@ services:
       protocol: tcp
     volumes:
     - type: bind
-      source: ./nginx/nginx.conf
+      source: ./spring-petclinic-nginx/nginx.conf
       target: /etc/nginx/nginx.conf
   frontend:
     container_name: spring-petclinic-angular
@@ -50,13 +50,7 @@ services:
     image: nokdev/spring-petclinic-db
     restart: always
     environment:
-      MYSQL_DATABASE: 'petclinic'
-      # So you don't have to use root, but you can if you like
-      MYSQL_USER: 'user'
-      # You can use whatever password you like
-      MYSQL_PASSWORD: 'password'
-      # Password for root access
-      MYSQL_ROOT_PASSWORD: 'petclinic'
+      MYSQL_ROOT_PASSWORD: petclinic
     ports:
       - '3306:3306'
     expose:

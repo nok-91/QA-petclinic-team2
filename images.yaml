@@ -8,12 +8,12 @@ services:
   mysql:
     image: nokdev/spring-petclinic-db:latest
     build: ./spring-petclinic-db/.
-  back-end:
+  backend:
     image: nokdev/spring-petclinic-rest:latest
     build:
       context: ./spring-petclinic-rest/.
       dockerfile: Dockerfile     
-  front-end:
+  frontend:
     image: nokdev/spring-petclinic-angular:latest
     build: 
       context: ./spring-petclinic-angular/.

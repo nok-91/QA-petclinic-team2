@@ -49,7 +49,7 @@ services:
     image: nokdev/spring-petclinic-db
     restart: always
     environment:
-      MYSQL_ROOT_PASSWORD: petclinic
+      MYSQL_DATABASE: petclinic
       MYSQL_USER: pc
       MYSQL_PASSWORD: petclinic
     ports:

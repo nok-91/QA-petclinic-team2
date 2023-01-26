@@ -34,7 +34,7 @@ services:
     container_name: spring-petclinic-rest
     build: ./spring-petclinic-rest
     image: nokdev/spring-petclinic-rest:latest
-    restart: unless-stopped
+    # restart: unless-stopped
     deploy:
       replicas: 1
     networks: 

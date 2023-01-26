@@ -43,24 +43,24 @@ services:
     - target: 9966
       published: 9966
       protocol: tcp
-  # db:
-  #   container_name: spring-petclinic-db
-  #   build: ./spring-petclinic-db
-  #   image: nokdev/spring-petclinic-db
-  #   restart: always
-  #   environment:
-  #     MYSQL_DATABASE: petclinic
-  #     MYSQL_USER: pc
-  #     MYSQL_PASSWORD: petclinic
-  #   ports:
-  #   - target: 3306
-  #     published: 3306
-  #     protocol: tcp
-  #   volumes:
-  #     - petclinic-db:/var/lib/mysql
+  db:
+    container_name: spring-petclinic-db
+    build: ./spring-petclinic-db
+    image: nokdev/spring-petclinic-db
+    restart: always
+    environment:
+      MYSQL_DATABASE: petclinic
+      MYSQL_USER: pc
+      MYSQL_PASSWORD: petclinic
+    ports:
+    - target: 3306
+      published: 3306
+      protocol: tcp
+    volumes:
+      - petclinic-db:/var/lib/mysql
       
-# volumes:
-#   petclinic-db:
+volumes:
+  petclinic-db:
 
 networks:
   pc_network:

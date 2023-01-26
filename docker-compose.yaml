@@ -1,9 +1,9 @@
-version: '3.7'
+version: '3.8'
 services:
   nginx:
-    container_name: spring-petclinic-nginx
-    build: ./spring-petclinic-nginx
-    image: nokdev/spring-petclinic-nginx:latest
+    container_name: nginx
+    #build: ./spring-petclinic-nginx
+    image: nginx:alpine
     restart: unless-stopped
     deploy:
       replicas: 1 
@@ -17,6 +17,8 @@ services:
     - type: bind
       source: ./spring-petclinic-nginx/nginx.conf
       target: /etc/nginx/nginx.conf
+      depends_on:
+      - front-end
   frontend:
     container_name: spring-petclinic-angular
     build: ./spring-petclinic-angular

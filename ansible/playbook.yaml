@@ -1,49 +1,109 @@
-- hosts: all
-  become: yes
+---
+- hosts: webservers
+  become: true
   vars:
     github_repo: https://github.com/nok911/QA-petclinic-team2
     node_version: 18.13.0
-
-
-
   tasks:
-  - name: Install curl
-      yum:
-        name: curl
+    # install docker dependencies
+    - name: "Install docker dependencies"
+      apt:
+        pkg:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+        - python3
+        - python3-pip
+    # add gpg key, validates integrity of software before install 
+    - name: "add gpg key"
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
         state: present
-
-  - name: Install wget
-      yum:
-        name: wget
+    - name: "add repo"
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
         state: present
+    # install docker engine
+    - name: "Install docker engine"
+      apt:
+        pkg:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+    # install docker with pip 
+    - name: "Install with pip"
+      pip:
+        name:
+          - docker
+          - jsondiff
+        executable: pip3
+    # install docker compose 
 
-  - name: Install Java
-    apt:
-      name: openjdk-11-jdk
-      state: latest
-      version: openjdk-11-jdk
+    # install java
 
-  - name: Install Docker
-    apt:
-      name: docker
-      state: latest
-      version: latest
+    # install node js
 
-  - name: Install Docker Compose
-    shell: curl -sL "https://github.com/docker/compose/releases/download/1.27.4/ docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
+    # clone github repo
+    - name: clone repo
+      git:
+        repo: https://github.com/nok911/QA-petclinic-team2.git
+        dest: /home/ubuntu/repo
+        clone: yes
+        update: yes
+
+
+
+
+
+
+# - hosts: all
+#   become: yes
+#   vars:
+#     github_repo: https://github.com/nok911/QA-petclinic-team2
+#     node_version: 18.13.0
+
+
+
+#   tasks:
+#   - name: Install curl
+#       yum:
+#         name: curl
+#         state: present
+
+#   - name: Install wget
+#     yum:
+#       name: wget
+#       state: present
+
+#   - name: Install Java
+#     apt:
+#       name: openjdk-11-jdk
+#       state: latest
+#       version: openjdk-11-jdk
+
+#   - name: Install Docker
+#     apt:
+#       name: docker
+#       state: latest
+#       version: latest
+
+#   - name: Install Docker Compose
+#     shell: curl -sL "https://github.com/docker/compose/releases/download/1.27.4/ docker-compose-$(uname -s)-$(uname -m)" -o /usr/local/bin/docker-compose
 
   
-  - name: Install npm
-    shell:  curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - && sudo apt-get install -y nodejs
+#   - name: Install npm
+#     shell:  curl -sL https://deb.nodesource.com/setup_10.x | sudo -E bash - && sudo apt-get install -y nodejs
 
-  - name: npm self-update
-    command: npm install npm@{{ node_version }} -g  
+#   - name: npm self-update
+#     command: npm install npm@{{ node_version }} -g  
 
 
-  - name: Get EC2 Instance IPs
-      command: terraform output ec2_instance_ip
-      register: ec2_instance_ip
-      changed_when: false
+#   - name: Get EC2 Instance IPs
+#       command: terraform output ec2_instance_ip
+#       register: ec2_instance_ip
+#       changed_when: false
 
 
    

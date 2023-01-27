@@ -36,18 +36,19 @@ pipeline {
                 }
             }
         }
-        stage('run config playbook'){
-            steps{
-                sh "git clone https://github.com/Adamcoakley/team-magenta-group-two.git"
-                sh "ansible-playbook config.yaml"
-            }
-        }
+        // stage('run config playbook'){
+        //     steps{
+        //         sh "git clone https://github.com/Adamcoakley/team-magenta-group-two.git"
+        //         sh "ansible-playbook config.yaml"
+        //     }
+        // }
         stage('build and push docker images'){
             steps {
                 script{
                     withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'DockerHubPwd')]) {
                         sh "./scripts/docker-build.sh"
                     }
+                }
             }
         }
 

@@ -25,17 +25,17 @@ pipeline {
                 // }
             }
         }
-        stage('Run Terraform') {
-            steps {
-                echo 'Build infrastructure....'
-                dir("terraform") {
-                    // sh "terraform destroy -auto-approve"
-                    sh "terraform init"
-                    sh "terraform plan"
-                    sh "terraform apply -auto-approve"
-                }
-            }
-        }
+        // stage('Run Terraform') {
+        //     steps {
+        //         echo 'Build infrastructure....'
+        //         dir("terraform") {
+        //             // sh "terraform destroy -auto-approve"
+        //             sh "terraform init"
+        //             sh "terraform plan"
+        //             sh "terraform apply -auto-approve"
+        //         }
+        //     }
+        // }
         // stage('run config playbook'){
         //     steps{
         //         sh "git clone https://github.com/Adamcoakley/team-magenta-group-two.git"

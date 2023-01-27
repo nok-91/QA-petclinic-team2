@@ -45,7 +45,7 @@ pipeline {
         stage('build and push docker images'){
             steps {
                 script{
-                    withCredentials([string(credentialsId: 'DockerHubPwd', variable: 'DockerHubPwd')]) {
+                    withCredentials([string(credentialsId: 'dockerpass', variable: 'dockerpass')]) {
                         sh "./scripts/docker-build.sh"
                     }
                 }

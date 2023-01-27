@@ -1,0 +1,87 @@
+---
+- hosts: all 
+  become: true
+  gather_facts: no
+  tasks:
+      # wait for system to become reachable, our pipline was timing out 
+    - name: "wait for the system to become reachable"
+      wait_for_connection:
+    - name: "gather facts for first time"
+      setup:
+    # install docker dependencies
+    - name: "Install docker dependencies"
+      apt:
+        update_cache: yes
+        pkg:
+        - apt-transport-https
+        - ca-certificates
+        - curl
+        - gnupg
+        - lsb-release
+        - python3
+        - python3-pip
+    # add gpg key, validates integrity of software before install 
+    - name: "add gpg key"
+      apt_key:
+        url: https://download.docker.com/linux/ubuntu/gpg
+        state: present
+    - name: "add repo"
+      apt_repository:
+        repo: deb https://download.docker.com/linux/ubuntu bionic stable
+        state: present
+    # install docker engine
+    - name: "Install docker engine"
+      apt:
+        pkg:
+        - docker-ce
+        - docker-ce-cli
+        - containerd.io
+    # install docker with pip 
+    - name: "Install with pip"
+      pip:
+        name:
+          - docker
+          - jsondiff
+        executable: pip3
+    # install nginx
+    - name: "install nginx"
+      shell: apt install -y nginx
+    # install java
+    - name: "install java"
+      shell: apt install -y openjdk-11-jre-headless
+    # install node
+    - name: "install node"
+      shell: apt install -y nodejs
+    # clone github repo
+    - name: clone repo
+      git:
+        repo: https://github.com/nok911/QA-petclinic-team2.git
+        dest: /home/ubuntu/repo
+        clone: yes
+        update: yes
+    # docker pull backend image
+    - name: Pull Backend Docker Image
+      docker_image:
+        name: nokdev/spring-petclinic-rest:latest
+        source: pull
+    # run backend docker image
+    - name: Run the pulled backend image
+      docker_container:
+        name: spring-petclinic-rest
+        image: nokdev/spring-petclinic-rest:latest
+        state: started
+        ports:
+          - "9966:9966"
+    # pull frontend docker image
+    - name: Pull Frontend Docker Image
+      docker_image:
+        name: nokdev/spring-petclinic-angular:latest
+        source: pull
+    # run frontend docker image
+    - name: Run the pulled frontend image
+      docker_container:
+        name: spring-petclinic-angular
+        image: nokdev/spring-petclinic-angular:latest
+        state: started
+        ports:
+          - "8080:8080"

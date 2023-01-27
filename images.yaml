@@ -1,11 +1,11 @@
 version: "3.7"
 services: 
   nginx:
-    image: nokdev/spring-petclinic-nginx
+    image: nginx
     build:
       context: ./spring-petclinic-nginx/.
       dockerfile: Dockerfile
-  mysql:
+  db:
     image: nokdev/spring-petclinic-db:latest
     build: ./spring-petclinic-db/.
   backend:

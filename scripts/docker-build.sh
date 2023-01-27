@@ -1,4 +1,4 @@
 #!/bin/bash
-sudo docker login
-sudo docker-compose -f images.yaml build
-sudo docker-compose -f images.yaml push
+sudo docker login -u nokdev -p ${DockerHubPwd}
+sudo docker-compose -f docker-compose.yaml build
+sudo docker-compose -f docker-compose.yaml push

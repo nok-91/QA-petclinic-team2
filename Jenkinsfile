@@ -46,6 +46,8 @@ pipeline {
             steps {
                 script{
                     withCredentials([string(credentialsId: 'dockerpass', variable: 'dockerpass')]) {
+                        
+                        sh "sudo -S docker login -u nokdev -p ${dockerpass}"
                         sh "./scripts/docker-build.sh"
                     }
                 }
